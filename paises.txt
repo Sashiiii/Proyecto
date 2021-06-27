@@ -1,4 +1,4 @@
-Chile 
+Chile
 Argentina
 Peru
 Bolivia
@@ -8,13 +8,16 @@ Nicaragua
 Uruguay
 Colombia
 Mexico
-USA
+EEUU
 Costa Rica
 Brasil
 Filipinas
 India
 Egipto
 Francia
-Espana
 Inglaterra
 Portugal
+Noruega
+Rusia
+Canada
+Taiwan
