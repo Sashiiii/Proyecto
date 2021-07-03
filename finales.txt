@@ -1,0 +1,8 @@
+YOU SHALL NOT PASS!,No dejar entrar a nadie mientras trabajaste en la aduana
+Moises,Dejar entrar a todos mientras trabajaste en la aduana
+Robot,Completar la semana sin conseguir ninguna amonestacion
+Speedrun,Ser despedido en menos de un minuto en tu primer dia
+Sonic,Procesar 100 personas de forma correcta en total
+Despedido,Tener puntuacion negativa
+C H I!,Completar la semana sin ser despedido
+Fusilado,Conseguir una amonestacion el ultimo dia

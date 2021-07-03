@@ -8,17 +8,18 @@ typedef struct{
 typedef struct{
     int id;
     int flag;
-    char title[100];
-    char hist[1000];
+    char title[50];
+    char hist[100];
 }FIN;
 
 typedef struct {
-    char nombre[100];
-    char apellido[100];
-    char serie[100];
-    char motivo[100];
-    char pais[100];
+    char nombre[30];
+    char apellido[30];
+    char serie[30];
+    char motivo[30];
+    char pais[30];
     char genero[2];
+    char fecha[15];
 }pj;
 
 void leer_archivo(Map*, char*);
