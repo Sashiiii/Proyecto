@@ -2,14 +2,12 @@
 
 typedef struct{
     int key;
-    char info[100];
+    char info[90];
 }Pair;
 
 typedef struct{
-    int id;
     int flag;
-    char title[50];
-    char hist[100];
+    Pair hist;
 }FIN;
 
 typedef struct {
@@ -23,3 +21,7 @@ typedef struct {
 }pj;
 
 void leer_archivo(Map*, char*);
+void leer_progreso(int*, char*);
+void leer_punt(Map*, char* );
+void actualizar_finales_o(int*);
+void agregar_puntuacion( int);

@@ -8,7 +8,7 @@
 #include "Map.h"
 #include "pp.h"
 
-int incorrectos_total = 0, correctos_total = 0, aprobados_total = 0, rechazados_total = 0, puntaje_total = 0, dia = 0, finales_o[8] = {0,0,0,0,0,0,0,0};
+int incorrectos_total = 0, correctos_total = 0, aprobados_total = 0, rechazados_total = 0, puntaje_total = 0, dia = 0, finales_o[8];
 
 
 int is_equal_string(void * key1, void * key2) {
@@ -46,9 +46,10 @@ int higher_than_int(void * key1, void * key2) {
 }
 
 int main(){
-//    system("start a.mpeg");
-    int opcion = 0;
-  //Aqui inicializamos los mapas
+//system("start a.mpeg");
+    int opcion = 0, cont_finales=0;
+    char nombre_run[4];
+//Aqui inicializamos los mapas
     Map* nombres_h = createMap(is_equal_int);
     Map* nombres_m = createMap(is_equal_int);
     Map* apellidos = createMap(is_equal_int);
@@ -69,9 +70,15 @@ int main(){
     Map* s_x = createMap(is_equal_int);
     Map* s_y = createMap(is_equal_int);
     Map* s_z = createMap(is_equal_int);
-  //aqui se empizan a llenar los mapas
-  
+//aqui se empizan a llenar los mapas
     char archivo[30];
+
+    strcpy(archivo, "finales_obtenidos.txt");
+    leer_progreso(finales_o, archivo);
+
+    strcpy(archivo, "finales.txt");
+    leer_archivo(finales, archivo);
+
     strcpy(archivo, "nombres_h.txt");
     leer_archivo(nombres_h, archivo);
 
@@ -122,12 +129,10 @@ int main(){
 
     strcpy(archivo, "s_z.txt");
     leer_archivo(s_z, archivo);
-
-// LLENAR MAPA FINALES
-
+//  LLENAR MAPA FINALES
     Pair* a;
     int aux,gen;
-    clock_t tm1, tm2;
+    clock_t tm1, tm2,tmi;
     pj *persona;
     char fecha[20],fecha2[20], razon[50];
 /*  si correcto es 0, los datos se seleccionaran para que sea correcto, si no se seleccionara otro 
@@ -142,10 +147,33 @@ int main(){
             correcto, puntaje = 0, incorrectos = 0, correctos = 0, aprobados = 0, rechazados = 0;
             system("cls");
             printf("DIA 1:\n");
-            printf("Bienvenido a tu nuevo puesto de trabajo en la aduana chilena!\n");
+            printf("Como sabras soy tu supervisor, asi que mi deber es darte la bienvenida a tu nuevo puesto de trabajo en la aduana chilena! \n*Dice fingiendo emocion*\n");
             printf("Estaras encargado de revisar los documentos de la gente que busca ingresar a nuestro pais, ");
             printf("bastante facil no?, pero fijate bien, hay mas gente con papeles falsos de lo que esperarias\n");
-            printf("Por cierto, cada vez que te equivoques descontaremos una parte de tu salario. Buena suerte!\n\n");
+            printf("Por cierto, cada vez que te equivoques descontaremos una parte de tu salario. Buena suerte y viva Chile! \n*Suspira aburrido y se va*\n\n");
+            /*printf("        xxxxxxxxxxxxx\n");
+            printf("      xx               x\n");
+            printf("     xx                 x\n");
+            printf("    xx   ____|     ____| x\n");
+            printf("    xx          \\        x\n");
+            printf("    xx           >       x\n");
+            printf("    xx       ______      x\n");
+            printf("    xx                   x\n");
+            printf("     xx                 x\n");
+            printf("    xx                  x\n");
+            printf("   xx                    x\n");
+            printf("  xx                      x\n");
+            printf(" xx                        x\n");
+            printf("xx                         x\n");
+            printf("xx                         x\n");
+            printf("xx                         x\n");
+            printf("xx                         x\n");
+            printf("xx                         x\n");
+            printf("xx                         x\n");
+            printf("xx                         x\n");
+            printf("xx                         x\n");
+            printf("xx                         x\n");
+            printf("xx                         x\n\n\n");*/
             printf("CUANDO ESTES LISTO PARA COMENZAR PRESIONA <ENTER>\n");
             getch();
             system("cls");
@@ -159,6 +187,7 @@ int main(){
                 if(dia == 1){
                     tm1 = clock();
                     tm2 = clock();
+                    tmi = clock();
                     while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC)){                        
                     //se elige si la persona debera ser aprobada(1) o no(0)
                         correcto = rand() % 2;
@@ -230,19 +259,18 @@ int main(){
                             strcpy(persona->pais,a->info);
                             strcpy(razon,"PASAPORTE CORRECTO");
                         }
-                        
-                        
+
                     //printear cuadro
                         printf("Restricciones: solo pasaportes validos\n");
                         printf("\n\nFECHA ACTUAL: %s\n\n", fecha);
                         printf("////////////////////////////////////////////////////////////////// \n\n");
-                        printf("|               PASAPORTE\n\n\n");
-                        printf("|               NOMBRE: %s %s\n\n", persona->nombre, persona->apellido);
-                        printf("|               GENERO: %s\n\n", persona->genero);
-                        printf("|               PAIS: %s\n\n", persona->pais);
-                        printf("|               SERIE: %s\n\n", persona->serie);
-                        printf("|               MOTIVO DE VIAJE: %s\n\n", persona->motivo);
-                        printf("|               FECHA DE VENCIMIENTO: %s\n\n\n", persona->fecha);
+                        printf("               PASAPORTE\n\n\n");
+                        printf("               NOMBRE: %s %s\n\n", persona->nombre, persona->apellido);
+                        printf("               GENERO: %s\n\n", persona->genero);
+                        printf("               PAIS: %s\n\n", persona->pais);
+                        printf("               SERIE: %s\n\n", persona->serie);
+                        printf("               MOTIVO DE VIAJE: %s\n\n", persona->motivo);
+                        printf("               FECHA DE VENCIMIENTO: %s\n\n\n", persona->fecha);
                         printf("////////////////////////////////////////////////////////////////// \n\n");
                         printf("<OPCIONES>\n");
                         printf("PRESIONA EL NUMERO CORRESPONDIENTE Y <ENTER>\n");
@@ -270,15 +298,50 @@ int main(){
                     }
                     puntaje = (correctos*50) - (incorrectos*25);
                     puntaje_total += puntaje;
+                    incorrectos_total += incorrectos;
+                    correctos_total += correctos_total;
+                    aprobados_total += aprobados;
+                    rechazados_total += rechazados;
                     printf("PUNTAJE: %d\n", puntaje);
                     if(puntaje < 0){ //CONDICIONES PERDER
-                        printf("Despedido!");
+                        printf("Final 6 de 8: Despedido!\n\n\n");
                         dia = 8;
-                        //agregar final en archivo
+                        finales_o[5] = 1;
+                        actualizar_finales_o(finales_o);
+                        agregar_puntuacion(puntaje_total);
+                        if(((tmi - tm1) / CLOCKS_PER_SEC) < 60){
+                            printf("Logro 4 de 8: Speedrun!\n\n\n");
+                            dia = 8;
+                            finales_o[3] = 1;
+                            actualizar_finales_o(finales_o);
+                        }
+                        if(aprobados_total == 0 && finales_o[0]!=1){
+                            printf("Logro 1 de 8: YOU SHALL NOT PASS!\n\n\n");
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            finales_o[0]=1;
+                            actualizar_finales_o(finales_o);
+                            system("cls");
+                        }
+                        if(rechazados_total == 0 && finales_o[1]!=1){
+                            printf("Logro 2 de 8: Moises\n\n\n");
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            finales_o[1]=1;
+                            actualizar_finales_o(finales_o);
+                        }
+                        if(correctos_total >= 100 && finales_o[4] != 1){
+                            printf("Logro 5 de 8: Sonic\n\n\n");
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            finales_o[4]=1;
+                            actualizar_finales_o(finales_o);
+                        }
+                    }else{
+                        printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                        getch();
+                        system("cls");
                     }
-                    printf("PRESIONA <ENTER> PARA CONTINUAR\n");
-                    getch();
-                    system("cls");
                     dia++;
                 }
            //2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
@@ -287,8 +350,8 @@ int main(){
                 if(dia==2){
                     printf("DIA 2:\n");
                     printf("Veo que le agarraste el ritmo, desafortunadamente quieren limitar la cantidad de gente que entra al pais, ");
-                    printf("por lo que a partir de hoy cada dia no podras autorizar pasaportes que contengan cierta letra, asi que hoy no ");
-                    printf("podra pasar nadie que tenga la letra X en su serie\n");
+                    printf("por lo que a partir de hoy cada dia no podras autorizar pasaportes que contengan cierta letra en la serie de su pasaporte, asi que hoy no ");
+                    printf("podra pasar nadie que tenga la letra X en la serie de su pasaporte\n");
                     printf("Buena suerte y VIVA CHILE!\n\n");
                     printf("CUANDO ESTES LISTO PARA COMENZAR PRESIONA <ENTER>\n");
                     getch();
@@ -405,10 +468,41 @@ int main(){
                         getch();
                         system("cls");
                         if(puntaje < 0){ //CONDICIONES PERDER
-                            printf("Despedido!");
+                            printf("Final 6 de 8: Despedido!\n\n\n");
                             dia = 8;
-                        //agregar final en archivo
-                    }
+                            finales_o[5] = 1;
+                            actualizar_finales_o(finales_o);
+                            agregar_puntuacion(puntaje_total);
+                            if(((tmi - tm1) / CLOCKS_PER_SEC) < 60){
+                                printf("Logro 4 de 8: Speedrun!\n\n\n");
+                                dia = 8;
+                                finales_o[3] = 1;
+                                actualizar_finales_o(finales_o);
+                            }
+                            if(aprobados_total == 0 && finales_o[0]!=1){
+                                printf("Logro 1 de 8: YOU SHALL NOT PASS!\n\n\n");
+                                printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                                getch();
+                                finales_o[0]=1;
+                                actualizar_finales_o(finales_o);
+                                system("cls");
+                            }
+                            if(rechazados_total == 0 && finales_o[1]!=1){
+                                printf("Logro 2 de 8: Moises\n\n\n");
+                                printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                                getch();
+                                finales_o[1]=1;
+                                actualizar_finales_o(finales_o);
+                                system("cls");
+                            }
+                            if(correctos_total >= 100 && finales_o[4] != 1){
+                                printf("Logro 5 de 8: Sonic\n\n\n");
+                                printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                                getch();
+                                finales_o[4]=1;
+                                actualizar_finales_o(finales_o);
+                            }
+                        }
                     tm2 = clock();
                     }
                     puntaje = (correctos*50) - (incorrectos*25);
@@ -554,9 +648,40 @@ int main(){
                     puntaje_total += puntaje;
                     printf("PUNTAJE: %d\n", puntaje);
                     if(puntaje < 0){ //CONDICIONES PERDER
-                        printf("Despedido!");
+                        printf("Final 6 de 8: Despedido!\n\n\n");
                         dia = 8;
-                        //agregar final en archivo
+                        finales_o[5] = 1;
+                        actualizar_finales_o(finales_o);
+                        agregar_puntuacion(puntaje_total);
+                        if(((tmi - tm1) / CLOCKS_PER_SEC) < 60){
+                            printf("Logro 4 de 8: Speedrun!\n\n\n");
+                            dia = 8;
+                            finales_o[3] = 1;
+                            actualizar_finales_o(finales_o);
+                        }
+                        if(aprobados_total == 0 && finales_o[0]!=1){
+                            printf("Logro 1 de 8: YOU SHALL NOT PASS!\n\n\n");
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            finales_o[0]=1;
+                            actualizar_finales_o(finales_o);
+                            system("cls");
+                        }
+                        if(rechazados_total == 0 && finales_o[1]!=1){
+                            printf("Logro 2 de 8: Moises\n\n\n");
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            finales_o[1]=1;
+                            actualizar_finales_o(finales_o);
+                            system("cls");
+                        }
+                        if(correctos_total >= 100 && finales_o[4] != 1){
+                            printf("Logro 5 de 8: Sonic\n\n\n");
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            finales_o[4]=1;
+                            actualizar_finales_o(finales_o);
+                        }
                     }
                     printf("PRESIONA <ENTER> PARA CONTINUAR\n");
                     getch();
@@ -568,10 +693,9 @@ int main(){
            //444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
                 if(dia == 4){
                     printf("DIA 4:\n");
-                    printf("Eres el primero que dura tanto ;);) Buena suerte en lo que queda de semana, la necesitaras, ");
-                    printf("nos informan que argentinos ni peruanos podran pasar, el motivo es confidencial, solo cumple ordenes, ");
-                    printf("ademas series con la letra *M* estan restringidos por hoy y se necesita un ticket de acceso valido por hoy");//Implementar fujitivo
-                    printf(" para poder pasar\n");
+                    printf("Eres el primero que dura tanto ;), comienzas a hacer que sea dificil odiarte... Buena suerte en lo que queda de semana, la necesitaras. ");
+                    printf("Volviendo a lo que nos llama, nos informan que argentinos ni peruanos podran pasar, el motivo es confidencial, solo cumple ordenes, ");
+                    printf("ademas series con la letra *M* estan restringidos por hoy y se necesita un ticket de acceso valido por hoy\n");
                     printf("Buena suerte y VIVA CHILE!\n\n");
                     printf("CUANDO ESTES LISTO PARA COMENZAR PRESIONA <ENTER>\n");
                     getch();
@@ -713,9 +837,40 @@ int main(){
                     puntaje_total += puntaje;
                     printf("PUNTAJE: %d\n", puntaje);
                     if(puntaje < 0){ //CONDICIONES PERDER
-                        printf("Despedido!");
+                        printf("Final 6 de 8: Despedido!\n\n\n");
                         dia = 8;
-                        //agregar final en archivo
+                        finales_o[5] = 1;
+                        actualizar_finales_o(finales_o);
+                        agregar_puntuacion(puntaje_total);
+                        if(((tmi - tm1) / CLOCKS_PER_SEC) < 60){
+                            printf("Logro 4 de 8: Speedrun!\n\n\n");
+                            dia = 8;
+                            finales_o[3] = 1;
+                            actualizar_finales_o(finales_o);
+                        }
+                        if(aprobados_total == 0 && finales_o[0]!=1){
+                            printf("Logro 1 de 8: YOU SHALL NOT PASS!\n\n\n");
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            finales_o[0]=1;
+                            actualizar_finales_o(finales_o);
+                            system("cls");
+                        }
+                        if(rechazados_total == 0 && finales_o[1]!=1){
+                            printf("Logro 2 de 8: Moises\n\n\n");
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            finales_o[1]=1;
+                            actualizar_finales_o(finales_o);
+                            system("cls");
+                        }
+                        if(correctos_total >= 100 && finales_o[4] != 1){
+                            printf("Logro 5 de 8: Sonic\n\n\n");
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            finales_o[4]=1;
+                            actualizar_finales_o(finales_o);
+                        }
                     }
                     printf("PRESIONA <ENTER> PARA CONTINUAR\n");
                     getch();
@@ -727,9 +882,8 @@ int main(){
             //5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555           
                 if(dia==5){
                     printf("DIA 5:\n");
-                    printf("Eres el primero que dura tanto ;);) Buena suerte en lo que queda de semana, la necesitaras, ");
-                    printf("nos informan que solo residentes de CHILE, ECUADOR, PARAGUAY, NICARAGUA y URUGUAY podran pasar,");
-                    printf(" el motivo es confidencial, solo cumple ordenes, ademas series con la letra *A* estan restringidos por hoy");
+                    printf("Tengo prisa, asi que, en resumen los jefes dicen que solo residentes de CHILE, ECUADOR, PARAGUAY, NICARAGUA y URUGUAY podran pasar,");
+                    printf(" el motivo sigue siendo confidencial, solo obedece, ademas series con la letra *A* estan restringidos por hoy");
                     printf(", no olvides los tickets de acceso y por cierto, quienes vienen por trabajo tampoco pueden pasar");
                     printf("\n");
                     printf("Buena suerte y VIVA CHILE!\n\n");
@@ -880,9 +1034,40 @@ int main(){
                     puntaje_total += puntaje;
                     printf("PUNTAJE: %d\n", puntaje);
                     if(puntaje < 0){ //CONDICIONES PERDER
-                        printf("Despedido!");
+                        printf("Final 6 de 8: Despedido!\n\n\n");
                         dia = 8;
-                        //agregar final en archivo
+                        finales_o[5] = 1;
+                        actualizar_finales_o(finales_o);
+                        agregar_puntuacion(puntaje_total);
+                        if(((tmi - tm1) / CLOCKS_PER_SEC) < 60){
+                            printf("Logro 4 de 8: Speedrun!\n\n\n");
+                            dia = 8;
+                            finales_o[3] = 1;
+                            actualizar_finales_o(finales_o);
+                        }
+                        if(aprobados_total == 0 && finales_o[0]!=1){
+                            printf("Logro 1 de 8: YOU SHALL NOT PASS!\n\n\n");
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            finales_o[0]=1;
+                            actualizar_finales_o(finales_o);
+                            system("cls");
+                        }
+                        if(rechazados_total == 0 && finales_o[1]!=1){
+                            printf("Logro 2 de 8: Moises\n\n\n");
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            finales_o[1]=1;
+                            actualizar_finales_o(finales_o);
+                            system("cls");
+                        }
+                        if(correctos_total >= 100 && finales_o[4] != 1){
+                            printf("Logro 5 de 8: Sonic\n\n\n");
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            finales_o[4]=1;
+                            actualizar_finales_o(finales_o);
+                        }
                     }
                     printf("PRESIONA <ENTER> PARA CONTINUAR\n");
                     getch();
@@ -894,12 +1079,12 @@ int main(){
            //66666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
                 if(dia==6){
                     printf("DIA 6:\n");
-                    printf("Me impresiona que sigas aqui, pero bueno, llendo al grano\n");
-                    printf("nos informan que solo residentes de CHILE, ECUADOR, PARAGUAY, NICARAGUA, URUGUAY, COLOMBIA, MEXICO, EEUU, COSTA RICA ");
-                    printf("y BRASIL");
-                    printf(" el motivo sigue siendo confidencial, solo cumple ordenes, ademas series con la letra *T* estan restringidos por hoy");
+                    printf("Wow, me impresiona que sigues aqui... esto ya es raro...\n Pero bueno, llendo al grano\n");
+                    printf("Hoy solo residentes de CHILE, ECUADOR, PARAGUAY, NICARAGUA, URUGUAY, COLOMBIA, MEXICO, EEUU, COSTA RICA ");
+                    printf("y BRASIL pueden entrar.");
+                    printf(" El motivo sigue siendo confidencial, solo espero que no estemos en guerra o algo asi...\n Dejando el tema de lado, los pasaportes con series con la letra *T* estan restringidos por hoy");
                     printf(", recuerda los tickets de acceso y hoy no podran pasar turistas");
-                    printf("\n");//Implementar fujitivo
+                    printf("\n");
                     printf("Buena suerte y VIVA CHILE!\n\n");
                     printf("CUANDO ESTES LISTO PARA COMENZAR PRESIONA <ENTER>\n");
                     getch();
@@ -1047,9 +1232,40 @@ int main(){
                     puntaje_total += puntaje;
                     printf("PUNTAJE: %d\n", puntaje);
                     if(puntaje < 0){ //CONDICIONES PERDER
-                        printf("Despedido!");
+                        printf("Final 6 de 8: Despedido!\n\n\n");
                         dia = 8;
-                        //agregar final en archivo
+                        finales_o[5] = 1;
+                        actualizar_finales_o(finales_o);
+                        agregar_puntuacion(puntaje_total);
+                        if(((tmi - tm1) / CLOCKS_PER_SEC) < 60){
+                            printf("Logro 4 de 8: Speedrun!\n\n\n");
+                            dia = 8;
+                            finales_o[3] = 1;
+                            actualizar_finales_o(finales_o);
+                        }
+                        if(aprobados_total == 0 && finales_o[0]!=1){
+                            printf("Logro 1 de 8: YOU SHALL NOT PASS!\n\n\n");
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            finales_o[0]=1;
+                            actualizar_finales_o(finales_o);
+                            system("cls");
+                        }
+                        if(rechazados_total == 0 && finales_o[1]!=1){
+                            printf("Logro 2 de 8: Moises\n\n\n");
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            finales_o[1]=1;
+                            actualizar_finales_o(finales_o);
+                            system("cls");
+                        }
+                        if(correctos_total >= 100 && finales_o[4] != 1){
+                            printf("Logro 5 de 8: Sonic\n\n\n");
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            finales_o[4]=1;
+                            actualizar_finales_o(finales_o);
+                        }
                     }
                     printf("PRESIONA <ENTER> PARA CONTINUAR\n");
                     getch();
@@ -1061,17 +1277,17 @@ int main(){
             //7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
                 if(dia==7){
                     printf("DIA 7:\n");
-                    printf("Ya llegaste bastante lejos, asi que creo que debo decirte que esta pasando...\n");
-                    printf("Nuestro jefe esta loco, ha estado cambiando las reglas como si fuera un juego para que nos despidan, ");
-                    printf("pero hoy... si cometemos un error... nos matara tot\n");
-                    printf("Asi que ten mucho cuidado y... pase lo que pase... quiero que sepas que te quiero <NOMBRE JUGADOR>");
-                    printf("Nos informan que solo residentes de CHILE, ECUADOR, PARAGUAY, NICARAGUA, URUGUAY, COLOMBIA, MEXICO, EEUU, COSTA RICA ");
-                    printf(", BRASIL, FILIPINAS, INDIA, EGIPTO, FRANCIA Y INGLATERRA");
+                    printf("Ya llegaste bastante lejos, asi que creo que debo decirte lo que esta pasando...\n");
+                    printf("Esta mañana me entere de que nuestro jefe esta loco, ha estado cambiando las reglas como si fuera un juego maniaco para que nos despidan, ");
+                    printf("pero hoy... es distinto... veras, si cometemos el mas minimo error... nos matara tot\n");
+                    printf("Asi que ten mucho cuidado y... pase lo que pase... quiero que sepas que te quiero <NOMBRE JUGADOR>\n");
+                    printf("*EJEM* Nos informan que solo residentes de CHILE, ECUADOR, PARAGUAY, NICARAGUA, URUGUAY, COLOMBIA, MEXICO, EEUU, COSTA RICA ");
+                    printf(", BRASIL, FILIPINAS, INDIA, EGIPTO, FRANCIA e INGLATERRA podran pasar");
                     printf(" ademas series con la letra *Z* estan restringidos por hoy");
-                    printf(", recuerda los tickets de acceso y hoy no podran pasar turistas");
-                    printf("\n");//Implementar fujitivo
+                    printf(", recuerda los tickets de acceso y que hoy no podran pasar turistas");
+                    printf("\n");
                     printf("Buena suerte y QUE DIOS TE BENDIGA!\n\n");
-                    printf("*se aleja con paso cansado*  *se escucha un disparo*\n");
+                    printf("*se aleja con paso cansado*  *se escucha un disparo*\n\n");
                     printf("CUANDO ESTES LISTO PARA COMENZAR PRESIONA <ENTER>\n");
                     getch();
                     system("cls");
@@ -1079,7 +1295,7 @@ int main(){
                     tm1 = clock();
                     tm2 = clock();
                     strcpy(fecha ,"26.06.1586");
-                    while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC)){                        
+                    while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC) && dia == 7){                        
                     //se elige si la persona debera ser aprobada(1) o no(0)
                         correcto = rand() % 2;
                         persona = (pj*)malloc(sizeof(pj));
@@ -1210,7 +1426,18 @@ int main(){
                         }else{
                             rechazados++;
                         }
-                        printf("PARA DEJAR PASAR AL SIGUIENTE PRESIONA <ENTER>");
+                        if(incorrectos==1){
+                            printf("Oh no... *PIUM PIUM*\n\n\n");
+                            printf("Final 8 de 8: Fusilado\n\n\n");
+                            dia = 8;
+                            finales_o[7] = 1;
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            system("cls");
+                            actualizar_finales_o(finales_o);
+                            agregar_puntuacion(puntaje_total);
+                        }
+                        printf("PRESIONA <ENTER> PARA CONTINUAR\n");
                         getch();
                         system("cls");
                     tm2 = clock();
@@ -1218,12 +1445,47 @@ int main(){
                     puntaje = (correctos*50) - (incorrectos*25);
                     puntaje_total += puntaje;
                     printf("PUNTAJE: %d\n", puntaje);
-                    printf("PRESIONA <ENTER> PARA CONTINUAR\n");
-                    getch();
-                    system("cls");
-                    if(incorrectos==1){
+                    if(incorrectos == 0){
+                        printf("Te salvas por hoy... *RISA MALIGNA*\n\n\n");
+                        printf("Final 7 de 8: Viva Chile!\n\n\n");
+                        printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                        getch();
+                        dia = 8;
+                        finales_o[6] = 1;
                         system("cls");
-                        printf("Oh no... *PIUM PIUM*");
+                        actualizar_finales_o(finales_o);
+                        agregar_puntuacion(puntaje_total);
+                        if(incorrectos_total == 0){
+                            printf("Logro 3 de 8: Robot\n\n\n");
+                            printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                            getch();
+                            finales_o[2]=1;
+                            actualizar_finales_o(finales_o);
+                            system("cls");
+                        }
+                    }
+                    if(aprobados_total == 0 && finales_o[0]!=1){
+                        printf("Logro 1 de 8: YOU SHALL NOT PASS!\n\n\n");
+                        printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                        getch();
+                        finales_o[0]=1;
+                        actualizar_finales_o(finales_o);
+                        system("cls");
+                    }
+                    if(rechazados_total == 0 && finales_o[1]!=1){
+                        printf("Logro 2 de 8: Moises\n\n\n");
+                        printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                        getch();
+                        finales_o[1]=1;
+                        actualizar_finales_o(finales_o);
+                        system("cls");
+                    }
+                    if(correctos_total >= 100 && finales_o[4] != 1){
+                        printf("Logro 5 de 8: Sonic\n\n\n");
+                        printf("PRESIONA <ENTER> PARA CONTINUAR\n");
+                        getch();
+                        finales_o[4]=1;
+                        actualizar_finales_o(finales_o);
                     }
                     dia++;
                 }
@@ -1234,37 +1496,61 @@ int main(){
             break;
     //Caso 3: Tabla de puntajes 
         case 3:
+            tabla_punt = createMap(is_equal_int);
+            strcpy(archivo, "partidas_terminadas.txt");
+            leer_punt(tabla_punt, archivo);
     //Se obtiene el primer elemento del mapa de puntajes para ver si hay elementos o no y determinar que se va a mostrar por pantalla
             a = firstMap(tabla_punt);
             if (a==NULL){
                 printf("No hay puntajes para mostrar :c\n");
             }else{
-                printf("Usuario  |  Puntaje\n");
+                printf("Usuario | Puntaje\n");
                 while(a!=NULL){
-                    printf("%s , %d\n", a->info, a->key);
+                    printf("%s      %d\n", a->info, a->key);
                     a = nextMap(tabla_punt);
                 }
             }
-            opcion = 0;
-        break;
-       //Caso 4: Mostrar finales obtenidos 
-        case 4:
+            tabla_punt = NULL;
             opcion = 0;
             break;
-       //Caso 5: Salir de la aplicacion 
+       //Caso 4: Mostrar finales obtenidos 
+        case 4:
+            system("cls");
+            for(int i = 0; i<8;i++){
+                if(finales_o[i] == 1) cont_finales++;
+            }
+            a = firstMap(finales);
+            if (cont_finales==0){
+                printf("No has obtenido ningun final/logro para mostrar :c\n\n");
+                opcion = 0;
+                break;
+            }else{
+                printf("====================================================================\n");
+                printf("| Nombre                    | Metodo de obtencion                  |\n");
+                printf("====================================================================\n\n");
+                while(a!=NULL){
+                    if(finales_o[a->key]==1){
+                        printf("%s\n", a->info);
+                    }
+                    a = nextMap(finales);
+                }
+            }
+            opcion = 0;
+            break;
+       //Caso 5: Salir de la aplicacion
         case 5:
             break;
         default:
-            printf("==========================\n");
-            printf("|   PEPE DAME EL PAPEL   |\n");
-            printf("==========================\n\n"); 
+            printf("====================================================\n");
+            printf("|    Papers, please - Copiado por Calce-Team ;)    |\n");
+            printf("====================================================\n\n"); 
             printf("1.- Empezar nuevo juego\n2.- Cargar partida\n3.- Tabla de puntajes\n");
-            printf("4.- Mostrar finales obtenidos\n5.- Salir");
-            printf("\n\n ~Seleccione una opcion, escriba un *NUMERO*: ");
+            printf("4.- Finales y logros obtenidos\n5.- Salir");
+            printf("\n\n ~Seleccione una opcion, ingrese un <NUMERO>: ");
             scanf("%d", &opcion);
             printf("\n\n");
             break;
-        }
-    }    
-}
+            }
+        }    
+    }
 }
