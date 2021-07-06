@@ -27,3 +27,4 @@ void actualizar_finales_o(int*);
 void agregar_puntuacion( int);
 void guardar_progreso_partida(int, int, int, int, int, int);
 void print_pasaporte(pj*);
+void reset_progreso_partida();

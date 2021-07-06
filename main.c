@@ -1461,7 +1461,7 @@ int main(){
                         actualizar_finales_o(finales_o);
                     }
                     dia++;
-                    guardar_progreso_partida(incorrectos_total,correctos_total, aprobados_total, rechazados_total, puntaje_total, dia);
+                    reset_progreso_partida();
                 }
             opcion = 0;
             break;

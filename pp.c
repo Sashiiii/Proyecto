@@ -125,6 +125,14 @@ void guardar_progreso_partida(int incorrectos_total, int correctos_total, int ap
   fclose(archivoE);
 }
 
+void reset_progreso_partida(){
+  char archivo[30];
+  strcpy(archivo, "partida_actual.txt");
+  FILE *archivoE = fopen(archivo, "w");
+  fprintf(archivoE,"0,0,0,0,0,1\n");
+  fclose(archivoE);
+}
+
 void print_pasaporte(pj* persona){
   printf("////////////////////////////////////////////////////////////////// \n\n");
   printf("               PASAPORTE\n\n\n");
