@@ -53,8 +53,6 @@ int main(){
     Map* apellidos = createMap(is_equal_int);
     Map* paises = createMap(is_equal_int);
     Map* paisesMal = createMap(is_equal_int);
-    Map* saludos = createMap(is_equal_int);
-    Map* despedidas = createMap(is_equal_int);
     Map* motivos = createMap(is_equal_int);
     Map* series = createMap(is_equal_int);
     Map* tabla_punt = createMap(is_equal_int);
@@ -91,12 +89,6 @@ int main(){
 
     strcpy(archivo, "paisesMalEscritos.txt");
     leer_archivo(paisesMal, archivo);
-
-    strcpy(archivo, "saludos.txt");
-    leer_archivo(saludos, archivo);
-
-    strcpy(archivo, "despedidas.txt");
-    leer_archivo(despedidas, archivo);
 
     strcpy(archivo, "series.txt");
     leer_archivo(series, archivo);
@@ -285,7 +277,7 @@ int main(){
                         getch();
                         system("cls");
                     tm2 = clock();
-                    }  while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC));
+                    }while(120 > ((tm2 - tm1) / CLOCKS_PER_SEC));
                     puntaje = (correctos*50) - (incorrectos*25);
                     puntaje_total += puntaje;
                     incorrectos_total += incorrectos;
@@ -488,7 +480,7 @@ int main(){
                             }
                         }
                     tm2 = clock();
-                    }while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC));
+                    }while(120 > ((tm2 - tm1) / CLOCKS_PER_SEC));
                     puntaje = (correctos*50) - (incorrectos*25);
                     puntaje_total += puntaje;
                     incorrectos_total += incorrectos;
@@ -624,7 +616,7 @@ int main(){
                         getch();
                         system("cls");
                     tm2 = clock();
-                    }while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC));
+                    }while(120 > ((tm2 - tm1) / CLOCKS_PER_SEC));
                     puntaje = (correctos*50) - (incorrectos*25);
                     puntaje_total += puntaje;
                     incorrectos_total += incorrectos;
@@ -810,7 +802,7 @@ int main(){
                         getch();
                         system("cls");
                     tm2 = clock();
-                    }while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC));
+                    }while(120 > ((tm2 - tm1) / CLOCKS_PER_SEC));
                     puntaje = (correctos*50) - (incorrectos*25);
                     puntaje_total += puntaje;
                     incorrectos_total += incorrectos;
@@ -1004,7 +996,7 @@ int main(){
                         getch();
                         system("cls");
                     tm2 = clock();
-                    }while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC));
+                    }while(120 > ((tm2 - tm1) / CLOCKS_PER_SEC));
                     puntaje = (correctos*50) - (incorrectos*25);
                     puntaje_total += puntaje;
                     incorrectos_total += incorrectos;
@@ -1199,7 +1191,7 @@ int main(){
                         getch();
                         system("cls");
                     tm2 = clock();
-                    }while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC));
+                    }while(120 > ((tm2 - tm1) / CLOCKS_PER_SEC));
                     puntaje = (correctos*50) - (incorrectos*25);
                     puntaje_total += puntaje;
                     incorrectos_total += incorrectos;
@@ -1410,7 +1402,7 @@ int main(){
                         getch();
                         system("cls");
                     tm2 = clock();
-                    }while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC));
+                    }while(120 > ((tm2 - tm1) / CLOCKS_PER_SEC));
                     puntaje = (correctos*50) - (incorrectos*25);
                     puntaje_total += puntaje;
                     incorrectos_total += incorrectos;
