@@ -46,10 +46,8 @@ int higher_than_int(void * key1, void * key2) {
 }
 
 int main(){
-//system("start a.mpeg");
     int opcion = 0, cont_finales=0;
     char nombre_run[4];
-//Aqui inicializamos los mapas
     Map* nombres_h = createMap(is_equal_int);
     Map* nombres_m = createMap(is_equal_int);
     Map* apellidos = createMap(is_equal_int);
@@ -131,71 +129,74 @@ int main(){
     leer_archivo(s_z, archivo);
 //  LLENAR MAPA FINALES
     Pair* a;
-    int aux,gen;
+    int aux,gen,opcion2;
     clock_t tm1, tm2,tmi;
     pj *persona;
     char fecha[20],fecha2[20], razon[50];
 /*  si correcto es 0, los datos se seleccionaran para que sea correcto, si no se seleccionara otro 
     numero para ver que dato se insertara incorrectamente  */
-    int correcto, puntaje = 0, incorrectos = 0, correctos = 0, aprobados = 0, rechazados = 0;
+    int correcto, puntaje, incorrectos, correctos, aprobados, rechazados;
     srand(time(NULL));
     while (opcion!=5){
     /* SWITCH MENU */
         switch (opcion){
     //Caso 1: Empezar nuevo juego 
         case 1:
-            correcto, puntaje = 0, incorrectos = 0, correctos = 0, aprobados = 0, rechazados = 0;
-            system("cls");
-            printf("DIA 1:\n");
-            printf("Como sabras soy tu supervisor, asi que mi deber es darte la bienvenida a tu nuevo puesto de trabajo en la aduana chilena! \n*Dice fingiendo emocion*\n");
-            printf("Estaras encargado de revisar los documentos de la gente que busca ingresar a nuestro pais, ");
-            printf("bastante facil no?, pero fijate bien, hay mas gente con papeles falsos de lo que esperarias\n");
-            printf("Por cierto, cada vez que te equivoques descontaremos una parte de tu salario. Buena suerte y viva Chile! \n*Suspira aburrido y se va*\n\n");
-            /*printf("        xxxxxxxxxxxxx\n");
-            printf("      xx               x\n");
-            printf("     xx                 x\n");
-            printf("    xx   ____|     ____| x\n");
-            printf("    xx          \\        x\n");
-            printf("    xx           >       x\n");
-            printf("    xx       ______      x\n");
-            printf("    xx                   x\n");
-            printf("     xx                 x\n");
-            printf("    xx                  x\n");
-            printf("   xx                    x\n");
-            printf("  xx                      x\n");
-            printf(" xx                        x\n");
-            printf("xx                         x\n");
-            printf("xx                         x\n");
-            printf("xx                         x\n");
-            printf("xx                         x\n");
-            printf("xx                         x\n");
-            printf("xx                         x\n");
-            printf("xx                         x\n");
-            printf("xx                         x\n");
-            printf("xx                         x\n");
-            printf("xx                         x\n\n\n");*/
-            printf("CUANDO ESTES LISTO PARA COMENZAR PRESIONA <ENTER>\n");
-            getch();
-            system("cls");
-            dia = 1;
-            strcpy(fecha ,"20.06.1586");
+            do{
+                printf("1.- Comenzar una nueva partida\n2.- Continuar partida anterior\n");
+                scanf("%d", &opcion2); 
+            }while(opcion2 != 1 && opcion2!=2);
+            
+            if(opcion2 == 1){
+                dia = 1;
+            }else if(opcion2 == 2){
+                //leer archivo
+                strcpy(archivo, "partida_actual.txt");
+                FILE *archivoEntrada = fopen(archivo, "r");
+                char linea[50];
+                char *token;
+
+                fscanf(archivoEntrada, "%d", &incorrectos_total);
+                fscanf(archivoEntrada, ",%d", &correctos_total);
+                fscanf(archivoEntrada, ",%d", &aprobados_total);
+                fscanf(archivoEntrada, ",%d", &rechazados_total);
+                fscanf(archivoEntrada, ",%d", &puntaje_total);
+                fscanf(archivoEntrada, ",%d", &dia);
+
+                /* Se cierra el archivo. */
+                if (fclose(archivoEntrada) == EOF){
+                /* Si hubo algun problema con cerrar el archivo se imprime el siguiente mensaje. */
+                printf("El archivo no se pudo cerrar correctamente");
+                }
+            }
+            correcto = 0 , puntaje = 0, incorrectos = 0, correctos = 0, aprobados = 0, rechazados = 0;
+            
             while(dia < 8){
                 
             //1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111    
             //1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111    
             //1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111    
                 if(dia == 1){
+                    system("cls");
+                    printf("DIA 1:\n");
+                    printf("Como sabras soy tu supervisor, asi que mi deber es darte la bienvenida a tu nuevo puesto de trabajo en la aduana chilena! \n*Dice fingiendo emocion*\n");
+                    printf("Estaras encargado de revisar los documentos de la gente que busca ingresar a nuestro pais, ");
+                    printf("bastante facil no?, pero fijate bien, hay mas gente con papeles falsos de lo que esperarias\n");
+                    printf("Por cierto, cada vez que te equivoques descontaremos una parte de tu salario. Buena suerte y viva Chile! \n*Suspira aburrido y se va*\n\n");
+                    printf("CUANDO ESTES LISTO PARA COMENZAR PRESIONA <ENTER>\n");
+                    getch();
+                    system("cls");
+                    strcpy(fecha ,"20.06.1586");
                     tm1 = clock();
                     tm2 = clock();
                     tmi = clock();
-                    while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC)){                        
+                    do{                        
                     //se elige si la persona debera ser aprobada(1) o no(0)
                         correcto = rand() % 2;
-                    
                         persona = (pj*)malloc(sizeof(pj));
 
                     //se elige un numero para elegir los diferentes datos de la persona
-                        gen = rand() % 2;
+                        gen = rand() % 2;                        
                         if(gen == 1){
                             strcpy(persona->genero, "F");
                             aux = rand()%43;
@@ -254,24 +255,13 @@ int main(){
                                 strcpy(razon,"PASAPORTE VENCIDO");
                             }
                         }else{
-                            aux = rand() % 23;
-                            a = searchMap(paises,&aux);
-                            strcpy(persona->pais,a->info);
                             strcpy(razon,"PASAPORTE CORRECTO");
                         }
 
                     //printear cuadro
                         printf("Restricciones: solo pasaportes validos\n");
                         printf("\n\nFECHA ACTUAL: %s\n\n", fecha);
-                        printf("////////////////////////////////////////////////////////////////// \n\n");
-                        printf("               PASAPORTE\n\n\n");
-                        printf("               NOMBRE: %s %s\n\n", persona->nombre, persona->apellido);
-                        printf("               GENERO: %s\n\n", persona->genero);
-                        printf("               PAIS: %s\n\n", persona->pais);
-                        printf("               SERIE: %s\n\n", persona->serie);
-                        printf("               MOTIVO DE VIAJE: %s\n\n", persona->motivo);
-                        printf("               FECHA DE VENCIMIENTO: %s\n\n\n", persona->fecha);
-                        printf("////////////////////////////////////////////////////////////////// \n\n");
+                        print_pasaporte(persona);
                         printf("<OPCIONES>\n");
                         printf("PRESIONA EL NUMERO CORRESPONDIENTE Y <ENTER>\n");
                         printf("1. APROBAR\n2. RECHAZAR\n\n");
@@ -295,7 +285,7 @@ int main(){
                         getch();
                         system("cls");
                     tm2 = clock();
-                    }
+                    }  while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC));
                     puntaje = (correctos*50) - (incorrectos*25);
                     puntaje_total += puntaje;
                     incorrectos_total += incorrectos;
@@ -343,7 +333,9 @@ int main(){
                         system("cls");
                     }
                     dia++;
+                    guardar_progreso_partida(incorrectos_total,correctos_total, aprobados_total, rechazados_total, puntaje_total, dia);
                 }
+                
            //2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
            //2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
            //2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
@@ -359,7 +351,7 @@ int main(){
                     puntaje = 0, aprobados = 0, rechazados = 0, incorrectos = 0, correctos = 0;
                     tm1 = clock();
                     strcpy(fecha ,"21.06.1586");
-                    while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC)){                        
+                    do{                       
                     //se elige si la persona debera ser aprobada(1) o no(0)
                         correcto = rand() % 2;
                         persona = (pj*)malloc(sizeof(pj));
@@ -436,15 +428,7 @@ int main(){
                         printf("Restricciones: solo pasaportes validos\n");
                         printf("               pasaportes con letra X en su serie no podran ser autorizados\n");
                         printf("\n\nFECHA ACTUAL: %s\n\n", fecha);
-                        printf("////////////////////////////////////////////////////////////////// \n\n");
-                        printf("               PASAPORTE\n\n\n");
-                        printf("               NOMBRE: %s %s\n\n", persona->nombre, persona->apellido);
-                        printf("               GENERO: %s\n\n", persona->genero);
-                        printf("               PAIS: %s\n\n", persona->pais);
-                        printf("               SERIE: %s\n\n", persona->serie);
-                        printf("               MOTIVO DE VIAJE: %s\n\n", persona->motivo);
-                        printf("               FECHA DE VENCIMIENTO: %s\n\n\n", persona->fecha);
-                        printf("////////////////////////////////////////////////////////////////// \n\n");
+                        print_pasaporte(persona);
                         printf("<OPCIONES>\n");
                         printf("PRESIONA EL NUMERO CORRESPONDIENTE Y <ENTER>\n");
                         printf("1. APROBAR\n2. RECHAZAR\n\n");
@@ -504,14 +488,19 @@ int main(){
                             }
                         }
                     tm2 = clock();
-                    }
+                    }while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC));
                     puntaje = (correctos*50) - (incorrectos*25);
                     puntaje_total += puntaje;
+                    incorrectos_total += incorrectos;
+                    correctos_total += correctos_total;
+                    aprobados_total += aprobados;
+                    rechazados_total += rechazados;
                     printf("PUNTAJE: %d\n", puntaje);                    
                     printf("PRESIONA <ENTER> PARA CONTINUAR\n");
                     getch();
                     system("cls");
                     dia++;
+                    guardar_progreso_partida(incorrectos_total,correctos_total, aprobados_total, rechazados_total, puntaje_total, dia);
                 }
            //333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
            //333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
@@ -520,7 +509,7 @@ int main(){
                     printf("DIA 3:\n");
                     printf("Veo que le agarraste el ritmo, al igual que ayer, hoy habran series de pasaporte restringidas, ");
                     printf("siendo hoy las que poseen una letra <Y>, oh y por cierto argentinos no podran pasar");
-                    printf("\n");//Implementar fujitivo
+                    printf("\n");
                     printf("Buena suerte y VIVA CHILE!\n\n");
                     printf("CUANDO ESTES LISTO PARA COMENZAR PRESIONA <ENTER>\n");
                     getch();
@@ -528,7 +517,7 @@ int main(){
                     puntaje = 0, aprobados = 0, rechazados = 0, incorrectos = 0, correctos = 0;
                     tm1 = clock();
                     strcpy(fecha ,"22.06.1586");
-                    while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC)){                        
+                    do{                       
                     //se elige si la persona debera ser aprobada(1) o no(0)
                         correcto = rand() % 2;
                         persona = (pj*)malloc(sizeof(pj));
@@ -611,15 +600,7 @@ int main(){
                         printf("               Pasaportes con letra Y en su serie no podran ser autorizados\n");
                         printf("               No argentinos\n");
                         printf("\n\nFECHA ACTUAL: %s\n\n", fecha);
-                        printf("////////////////////////////////////////////////////////////////// \n\n");
-                        printf("               PASAPORTE\n\n\n");
-                        printf("               NOMBRE: %s %s\n\n", persona->nombre, persona->apellido);
-                        printf("               GENERO: %s\n\n", persona->genero);
-                        printf("               PAIS: %s\n\n", persona->pais);
-                        printf("               SERIE: %s\n\n", persona->serie);
-                        printf("               MOTIVO DE VIAJE: %s\n\n", persona->motivo);
-                        printf("               FECHA DE VENCIMIENTO: %s\n\n\n", persona->fecha);
-                        printf("////////////////////////////////////////////////////////////////// \n\n");
+                        print_pasaporte(persona);
                         printf("<OPCIONES>\n");
                         printf("PRESIONA EL NUMERO CORRESPONDIENTE Y <ENTER>\n");
                         printf("1. APROBAR\n2. RECHAZAR\n\n");
@@ -643,9 +624,13 @@ int main(){
                         getch();
                         system("cls");
                     tm2 = clock();
-                    }
+                    }while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC));
                     puntaje = (correctos*50) - (incorrectos*25);
                     puntaje_total += puntaje;
+                    incorrectos_total += incorrectos;
+                    correctos_total += correctos_total;
+                    aprobados_total += aprobados;
+                    rechazados_total += rechazados;
                     printf("PUNTAJE: %d\n", puntaje);
                     if(puntaje < 0){ //CONDICIONES PERDER
                         printf("Final 6 de 8: Despedido!\n\n\n");
@@ -687,6 +672,7 @@ int main(){
                     getch();
                     system("cls");
                     dia++;
+                    guardar_progreso_partida(incorrectos_total,correctos_total, aprobados_total, rechazados_total, puntaje_total, dia);
                 }
            //444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
            //444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
@@ -704,7 +690,7 @@ int main(){
                     tm1 = clock();
                     tm2 = clock();
                     strcpy(fecha ,"23.06.1586");
-                    while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC)){                        
+                    do{                        
                     //se elige si la persona debera ser aprobada(1) o no(0)
                         correcto = rand() % 2;
                         persona = (pj*)malloc(sizeof(pj));
@@ -795,15 +781,7 @@ int main(){
                         printf("               No argentinos, ni peruanos\n");
                         printf("               Ticket de acceso valido\n");
                         printf("\n\nFECHA ACTUAL: %s\n\n", fecha);
-                        printf("////////////////////////////////////////////////////////////////// \n\n");
-                        printf("               PASAPORTE\n\n\n");
-                        printf("               NOMBRE: %s %s\n\n", persona->nombre, persona->apellido);
-                        printf("               GENERO: %s\n\n", persona->genero);
-                        printf("               PAIS: %s\n\n", persona->pais);
-                        printf("               SERIE: %s\n\n", persona->serie);
-                        printf("               MOTIVO DE VIAJE: %s\n\n", persona->motivo);
-                        printf("               FECHA DE VENCIMIENTO: %s\n\n\n", persona->fecha);
-                        printf("////////////////////////////////////////////////////////////////// \n\n\n");
+                        print_pasaporte(persona);
 
                         printf("////////////////////////////////////////////////////////////////// \n\n");
                         printf("               Ticket de acceso para el dia: %s\n\n", fecha2);
@@ -832,9 +810,13 @@ int main(){
                         getch();
                         system("cls");
                     tm2 = clock();
-                    }
+                    }while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC));
                     puntaje = (correctos*50) - (incorrectos*25);
                     puntaje_total += puntaje;
+                    incorrectos_total += incorrectos;
+                    correctos_total += correctos_total;
+                    aprobados_total += aprobados;
+                    rechazados_total += rechazados;
                     printf("PUNTAJE: %d\n", puntaje);
                     if(puntaje < 0){ //CONDICIONES PERDER
                         printf("Final 6 de 8: Despedido!\n\n\n");
@@ -876,6 +858,7 @@ int main(){
                     getch();
                     system("cls");
                     dia++;
+                    guardar_progreso_partida(incorrectos_total,correctos_total, aprobados_total, rechazados_total, puntaje_total, dia);
                 }
             //5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
             //5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
@@ -894,7 +877,7 @@ int main(){
                     tm1 = clock();
                     tm2 = clock();
                     strcpy(fecha ,"24.06.1586");
-                    while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC)){                        
+                    do{                        
                     //se elige si la persona debera ser aprobada(1) o no(0)
                         correcto = rand() % 2;
                         persona = (pj*)malloc(sizeof(pj));
@@ -993,15 +976,7 @@ int main(){
                         printf("               Ticket de acceso valido\n");
                         printf("               Quienes vienen por trabajo no pueden pasar\n");
                         printf("\n\nFECHA ACTUAL: %s\n\n", fecha);
-                        printf("////////////////////////////////////////////////////////////////// \n\n");
-                        printf("               PASAPORTE\n\n\n");
-                        printf("               NOMBRE: %s %s\n\n", persona->nombre, persona->apellido);
-                        printf("               GENERO: %s\n\n", persona->genero);
-                        printf("               PAIS: %s\n\n", persona->pais);
-                        printf("               SERIE: %s\n\n", persona->serie);
-                        printf("               MOTIVO DE VIAJE: %s\n\n", persona->motivo);
-                        printf("               FECHA DE VENCIMIENTO: %s\n\n\n", persona->fecha);
-                        printf("////////////////////////////////////////////////////////////////// \n\n\n");
+                        print_pasaporte(persona);
                         printf("////////////////////////////////////////////////////////////////// \n\n");
                         printf("               Ticket de acceso para el dia: %s\n\n", fecha2);
                         printf("////////////////////////////////////////////////////////////////// \n\n\n");
@@ -1029,9 +1004,13 @@ int main(){
                         getch();
                         system("cls");
                     tm2 = clock();
-                    }
+                    }while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC));
                     puntaje = (correctos*50) - (incorrectos*25);
                     puntaje_total += puntaje;
+                    incorrectos_total += incorrectos;
+                    correctos_total += correctos_total;
+                    aprobados_total += aprobados;
+                    rechazados_total += rechazados;
                     printf("PUNTAJE: %d\n", puntaje);
                     if(puntaje < 0){ //CONDICIONES PERDER
                         printf("Final 6 de 8: Despedido!\n\n\n");
@@ -1073,6 +1052,7 @@ int main(){
                     getch();
                     system("cls");
                     dia++;
+                    guardar_progreso_partida(incorrectos_total,correctos_total, aprobados_total, rechazados_total, puntaje_total, dia);
                 }
            //66666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
            //66666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
@@ -1093,7 +1073,7 @@ int main(){
                     tm1 = clock();
                     tm2 = clock();
                     strcpy(fecha ,"25.06.1586");
-                    while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC)){                        
+                    do{                        
                     //se elige si la persona debera ser aprobada(1) o no(0)
                         correcto = rand() % 2;
                         persona = (pj*)malloc(sizeof(pj));
@@ -1191,15 +1171,7 @@ int main(){
                         printf("               Solo residentes de CHILE, ECUADOR, PARAGUAY, NICARAGUA, URUGUAY, COLOMBIA, MEXICO, EEUU, COSTA RICA y BRASIL\n");
                         printf("               No turistas\n");
                         printf("\n\nFECHA ACTUAL: %s\n\n", fecha);
-                        printf("////////////////////////////////////////////////////////////////// \n\n");
-                        printf("               PASAPORTE\n\n\n");
-                        printf("               NOMBRE: %s %s\n\n", persona->nombre, persona->apellido);
-                        printf("               GENERO: %s\n\n", persona->genero);
-                        printf("               PAIS: %s\n\n", persona->pais);
-                        printf("               SERIE: %s\n\n", persona->serie);
-                        printf("               MOTIVO DE VIAJE: %s\n\n", persona->motivo);
-                        printf("               FECHA DE VENCIMIENTO: %s\n\n\n", persona->fecha);
-                        printf("////////////////////////////////////////////////////////////////// \n\n\n");
+                        print_pasaporte(persona);
                         printf("////////////////////////////////////////////////////////////////// \n\n");
                         printf("               Ticket de acceso para el dia: %s\n\n", fecha2);
                         printf("////////////////////////////////////////////////////////////////// \n\n\n");
@@ -1227,9 +1199,13 @@ int main(){
                         getch();
                         system("cls");
                     tm2 = clock();
-                    }
+                    }while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC));
                     puntaje = (correctos*50) - (incorrectos*25);
                     puntaje_total += puntaje;
+                    incorrectos_total += incorrectos;
+                    correctos_total += correctos_total;
+                    aprobados_total += aprobados;
+                    rechazados_total += rechazados;
                     printf("PUNTAJE: %d\n", puntaje);
                     if(puntaje < 0){ //CONDICIONES PERDER
                         printf("Final 6 de 8: Despedido!\n\n\n");
@@ -1271,6 +1247,7 @@ int main(){
                     getch();
                     system("cls");
                     dia++;
+                    guardar_progreso_partida(incorrectos_total,correctos_total, aprobados_total, rechazados_total, puntaje_total, dia);
                 }
             //7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
             //7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
@@ -1278,7 +1255,7 @@ int main(){
                 if(dia==7){
                     printf("DIA 7:\n");
                     printf("Ya llegaste bastante lejos, asi que creo que debo decirte lo que esta pasando...\n");
-                    printf("Esta mañana me entere de que nuestro jefe esta loco, ha estado cambiando las reglas como si fuera un juego maniaco para que nos despidan, ");
+                    printf("Hoy me entere de que nuestro jefe esta loco, ha estado cambiando las reglas como si fuera un juego maniaco para que nos despidan, ");
                     printf("pero hoy... es distinto... veras, si cometemos el mas minimo error... nos matara tot\n");
                     printf("Asi que ten mucho cuidado y... pase lo que pase... quiero que sepas que te quiero <NOMBRE JUGADOR>\n");
                     printf("*EJEM* Nos informan que solo residentes de CHILE, ECUADOR, PARAGUAY, NICARAGUA, URUGUAY, COLOMBIA, MEXICO, EEUU, COSTA RICA ");
@@ -1295,7 +1272,7 @@ int main(){
                     tm1 = clock();
                     tm2 = clock();
                     strcpy(fecha ,"26.06.1586");
-                    while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC) && dia == 7){                        
+                    do{                        
                     //se elige si la persona debera ser aprobada(1) o no(0)
                         correcto = rand() % 2;
                         persona = (pj*)malloc(sizeof(pj));
@@ -1393,15 +1370,7 @@ int main(){
                         printf("               Solo residentes de CHILE, ECUADOR, PARAGUAY, NICARAGUA, URUGUAY, COLOMBIA, MEXICO, EEUU, COSTA RICA, BRASIL, FILIPINAS, INDIA, EGIPTO, FRANCIA E INGLATERRA\n");
                         printf("               No turistas\n");
                         printf("\n\nFECHA ACTUAL: %s\n\n", fecha);
-                        printf("////////////////////////////////////////////////////////////////// \n\n");
-                        printf("               PASAPORTE\n\n\n");
-                        printf("               NOMBRE: %s %s\n\n", persona->nombre, persona->apellido);
-                        printf("               GENERO: %s\n\n", persona->genero);
-                        printf("               PAIS: %s\n\n", persona->pais);
-                        printf("               SERIE: %s\n\n", persona->serie);
-                        printf("               MOTIVO DE VIAJE: %s\n\n", persona->motivo);
-                        printf("               FECHA DE VENCIMIENTO: %s\n\n\n", persona->fecha);
-                        printf("////////////////////////////////////////////////////////////////// \n\n\n");
+                        print_pasaporte(persona);
                         printf("////////////////////////////////////////////////////////////////// \n\n");
                         printf("               Ticket de acceso para el dia: %s\n\n", fecha2);
                         printf("////////////////////////////////////////////////////////////////// \n\n\n");
@@ -1441,9 +1410,13 @@ int main(){
                         getch();
                         system("cls");
                     tm2 = clock();
-                    }
+                    }while(30 > ((tm2 - tm1) / CLOCKS_PER_SEC));
                     puntaje = (correctos*50) - (incorrectos*25);
                     puntaje_total += puntaje;
+                    incorrectos_total += incorrectos;
+                    correctos_total += correctos_total;
+                    aprobados_total += aprobados;
+                    rechazados_total += rechazados;
                     printf("PUNTAJE: %d\n", puntaje);
                     if(incorrectos == 0){
                         printf("Te salvas por hoy... *RISA MALIGNA*\n\n\n");
@@ -1488,14 +1461,12 @@ int main(){
                         actualizar_finales_o(finales_o);
                     }
                     dia++;
+                    guardar_progreso_partida(incorrectos_total,correctos_total, aprobados_total, rechazados_total, puntaje_total, dia);
                 }
             opcion = 0;
             break;
-    //Caso 2: Cargar partida
+    //Caso 2: Tabla de puntajes 
         case 2:
-            break;
-    //Caso 3: Tabla de puntajes 
-        case 3:
             tabla_punt = createMap(is_equal_int);
             strcpy(archivo, "partidas_terminadas.txt");
             leer_punt(tabla_punt, archivo);
@@ -1513,8 +1484,8 @@ int main(){
             tabla_punt = NULL;
             opcion = 0;
             break;
-       //Caso 4: Mostrar finales obtenidos 
-        case 4:
+       //Caso 3: Mostrar finales obtenidos 
+        case 3:
             system("cls");
             for(int i = 0; i<8;i++){
                 if(finales_o[i] == 1) cont_finales++;
@@ -1537,15 +1508,15 @@ int main(){
             }
             opcion = 0;
             break;
-       //Caso 5: Salir de la aplicacion
-        case 5:
+       //Caso 4: Salir de la aplicacion
+        case 4:
             break;
         default:
             printf("====================================================\n");
             printf("|    Papers, please - Copiado por Calce-Team ;)    |\n");
             printf("====================================================\n\n"); 
-            printf("1.- Empezar nuevo juego\n2.- Cargar partida\n3.- Tabla de puntajes\n");
-            printf("4.- Finales y logros obtenidos\n5.- Salir");
+            printf("1.- Jugar\n2.- Tabla de puntajes\n");
+            printf("3.- Finales y logros obtenidos\n4.- Salir");
             printf("\n\n ~Seleccione una opcion, ingrese un <NUMERO>: ");
             scanf("%d", &opcion);
             printf("\n\n");

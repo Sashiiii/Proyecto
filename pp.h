@@ -25,3 +25,5 @@ void leer_progreso(int*, char*);
 void leer_punt(Map*, char* );
 void actualizar_finales_o(int*);
 void agregar_puntuacion( int);
+void guardar_progreso_partida(int, int, int, int, int, int);
+void print_pasaporte(pj*);

@@ -46,7 +46,6 @@ void leer_archivo(Map* mapa, char* archivo){
 
 void leer_progreso(int* arreglo, char* archivo){
   int i;
-  int contenido;
   FILE *archivoEntrada = fopen(archivo, "r");
   if (archivoEntrada == NULL){
     printf("El archivo no se pudo abrir en modo lectura\n");
@@ -116,4 +115,24 @@ void agregar_puntuacion( int puntaje_total){
     fprintf(archivoE, "%d,%s",puntaje_total,nombre_run);
   }
   fclose(archivoE);
+}
+
+void guardar_progreso_partida(int incorrectos_total, int correctos_total, int aprobados_total, int rechazados_total, int puntaje_total, int dia){
+  char archivo[30];
+  strcpy(archivo, "partida_actual.txt");
+  FILE *archivoE = fopen(archivo, "w");
+  fprintf(archivoE,"%d,%d,%d,%d,%d,%d\n",incorrectos_total, correctos_total, aprobados_total, rechazados_total, puntaje_total, dia);
+  fclose(archivoE);
+}
+
+void print_pasaporte(pj* persona){
+  printf("////////////////////////////////////////////////////////////////// \n\n");
+  printf("               PASAPORTE\n\n\n");
+  printf("               NOMBRE: %s %s\n\n", persona->nombre, persona->apellido);
+  printf("               GENERO: %s\n\n", persona->genero);
+  printf("               PAIS: %s\n\n", persona->pais);
+  printf("               SERIE: %s\n\n", persona->serie);
+  printf("               MOTIVO DE VIAJE: %s\n\n", persona->motivo);
+  printf("               FECHA DE VENCIMIENTO: %s\n\n\n", persona->fecha);
+  printf("////////////////////////////////////////////////////////////////// \n\n");
 }
