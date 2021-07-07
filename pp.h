@@ -5,11 +5,6 @@ typedef struct{
     char info[90];
 }Pair;
 
-typedef struct{
-    int flag;
-    Pair hist;
-}FIN;
-
 typedef struct {
     char nombre[30];
     char apellido[30];
